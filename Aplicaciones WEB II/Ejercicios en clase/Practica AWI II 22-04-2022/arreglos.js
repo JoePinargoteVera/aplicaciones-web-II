@@ -15,7 +15,7 @@ const funcionx = animales[5];
 funcionx();
 
 
-const domesticos=  [ ...animales    ];
+const domestics=  [ ...animales    ];
 
 
 const todosLosAnimales= [ ...domesticos, ...animales ]
