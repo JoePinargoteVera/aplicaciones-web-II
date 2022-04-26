@@ -67,4 +67,4 @@ buscarRestaurantePorId(3, (err, restaurante)=>{
         return;       
     }
     console.log(restaurante);
-})
+});
