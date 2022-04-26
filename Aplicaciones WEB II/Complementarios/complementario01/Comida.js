@@ -10,6 +10,13 @@ class Comida {
     getComida() {
         return ` ${this.comidaNombre} ${this.tipo}  ${this.ingredientes} ${this.precio}`;
     }
+    getBetterComida() {
+        return ` 
+        nombre: ${this.comidaNombre} 
+        tipo de plato: ${this.tipo} 
+        ingredientes principales: ${this.ingredientes} 
+        precio: ${this.precio}`;
+    }
 }
 //3.	Definir un arreglo con sus comidas favoritas, teniendo como base el objeto del punto anterior.
 const ComidasFavoritas = [
@@ -67,7 +74,7 @@ function porFor(ComidasFavoritasx) {
 const Amayusculas = (comidas)=>{
     for (let i = 0; i < comidas.length; i++) {
         let element = comidas[i];
-        console.log(element.getComida().toUpperCase())
+        console.log(element.getBetterComida().toUpperCase())
         
     }
 }
