@@ -10,6 +10,6 @@ const dbConnection = async () =>{
     }
 }
 
-export = {
+export {
     dbConnection
 }
