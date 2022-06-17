@@ -23,6 +23,5 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validarCampos = void 0;
 const validarCampos = __importStar(require("./validarCampos"));
-exports.validarCampos = validarCampos;
+exports.default = Object.assign({}, validarCampos);

@@ -1,12 +1,12 @@
 "use strict";
-const { validationResult, } = require('express-validator');
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validarCampos = void 0;
+const express_validator_1 = require("express-validator");
 const validarCampos = (req, res, next) => {
-    const errors = validationResult(req);
+    const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         return res.status(400).json(errors);
     }
     next();
 };
-module.exports = {
-    validarCampos
-};
+exports.validarCampos = validarCampos;

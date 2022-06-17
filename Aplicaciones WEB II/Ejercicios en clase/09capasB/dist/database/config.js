@@ -8,13 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-const mongoose_1 = __importDefault(require("mongoose"));
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dbConnection = void 0;
+const mongoose_1 = require("mongoose");
 const dbConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(process.env.MONGODB_CNN || '');
+        yield (0, mongoose_1.connect)(process.env["MONGODB_CNN"] || "");
         console.log(`Base de datos ejecutándose sin problema`);
     }
     catch (error) {
@@ -22,6 +21,4 @@ const dbConnection = () => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(`Base de datos no disponible`);
     }
 });
-module.exports = {
-    dbConnection
-};
+exports.dbConnection = dbConnection;

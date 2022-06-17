@@ -21,15 +21,15 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.crearProducto = exports.obtenerProducto = exports.obtenerProductos = void 0;
-const { Producto } = require('../models');
+const modelos_1 = require("../modelos");
 const obtenerProductos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { limite = 10, desde = 0 } = req.query;
+    const { limite = '10', desde = '0' } = req.query;
     const query = { estado: true };
     const [total, productos] = yield Promise.all([
-        Producto.countDocuments(query),
-        Producto.find(query)
+        modelos_1.Producto.countDocuments(query),
+        modelos_1.Producto.find(query)
             .skip(Number(desde))
-            .limit(limite)
+            .limit(Number(limite))
     ]);
     res.json({
         total,
@@ -39,19 +39,19 @@ const obtenerProductos = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.obtenerProductos = obtenerProductos;
 const obtenerProducto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const producto = yield Producto.findById(id);
+    const producto = yield modelos_1.Producto.findById(id);
     res.json(producto);
 });
 exports.obtenerProducto = obtenerProducto;
 const crearProducto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const _a = req.body, { estado } = _a, body = __rest(_a, ["estado"]);
-    const existeProducto = yield Producto.findOne({ nombre: body.nombre });
+    const existeProducto = yield modelos_1.Producto.findOne({ nombre: body.nombre });
     if (existeProducto) {
         return res.status(400).json({
             message: `El producto con ese nombre ${body.nombre} ya se encuentra registrado`
         });
     }
-    const producto = new Producto(body);
+    const producto = new modelos_1.Producto(body);
     const productoNuevo = yield producto.save();
     return res.status(201).json(productoNuevo);
 });
