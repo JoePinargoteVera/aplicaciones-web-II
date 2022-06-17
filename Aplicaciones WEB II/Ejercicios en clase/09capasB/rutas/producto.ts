@@ -1,15 +1,13 @@
 import { Router }from 'express';
 import { check} from 'express-validator';
-
-import {
+import { Producto } from '../controladores';
+const {
     crearProducto,
     obtenerProducto,
     obtenerProductos
-} from '../controladores/producto';
-
-
-import { validarCampos } from '../middlewares/validarCampos';
-
+} = Producto;
+import funciones from '../middlewares';
+const { validarCampos } = funciones;
 const router  = Router();
 
 router.get('/', obtenerProductos );
@@ -18,4 +16,4 @@ router.get('/:id' , check('id','El id no es válidio').isMongoId()
 router.post('/', check('nombre','El nombre es requerido').not().isEmpty() 
 , validarCampos ,crearProducto);
 
-export = router;
+export {router};

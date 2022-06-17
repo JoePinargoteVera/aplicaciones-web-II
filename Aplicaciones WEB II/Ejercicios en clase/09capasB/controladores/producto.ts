@@ -1,29 +1,35 @@
 import {  Response, Request } from 'express';
-const { Producto } = require('../models');
+import { IProducto } from '../interfaces';
+import { Producto } from '../modelos';
 
-const obtenerProductos= async (req: Request,res: Response)=>{
-    const { limite= 10  , desde=0   } =  req.query;
+
+const obtenerProductos =  async (req: Request, res: Response)=>{
+    const { limite= '10'  , desde='0'   } =  req.query;
     const query= { estado:true   };
-    const [ total, productos ] =  await Promise.all(
+    const [ total, productos ]: [ Number, IProducto[]  ]   =  await Promise.all(
         [
             Producto.countDocuments(query),
             Producto.find(query)
-            .skip(Number(desde))
-            .limit(limite)
+            .skip( Number(desde) )
+            .limit(Number(limite))
         ]
     )
+    
     res.json({
         total,
         productos
     })
+
 }
-const obtenerProducto = async (req: Request,res: Response)=>{
+
+const obtenerProducto = async (req: Request, res: Response)=>{
     const {id} =req.params
-    const producto =  await Producto.findById(id);
+    const producto: IProducto|null =  await Producto.findById(id);
     res.json(producto);
 }
+
 const crearProducto = async (req: Request,res: Response)=>{
-    const {estado, ...body } =req.body;
+    const {estado, ...body } =req.body as IProducto;
     const existeProducto= await Producto.findOne({nombre:body.nombre});
     if (existeProducto)
     {
@@ -36,9 +42,6 @@ const crearProducto = async (req: Request,res: Response)=>{
     return res.status(201).json(productoNuevo);
 
 }
-
-
-
 
 
 export {

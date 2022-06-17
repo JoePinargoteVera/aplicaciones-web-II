@@ -1,6 +1,6 @@
 import {Producto} from './producto';
 
 
-export= {
+export {
     Producto
 }
