@@ -1,0 +1,20 @@
+version: '3'
+
+services: #especificamos los servicios
+  aplicacion: #creamos una imagen que sera la aplicacion de nuestro servicios
+    container_name: api
+    build: . #indicamos la ruta en donde se encuentra el dockerfile
+    depends_on:  #indicamos a que imagen se conectara nuestra api
+      - mongo
+    environment: #se indican las variables de entorno para la coneccion a la base de datos
+      - PORT=3000  #puerto
+      - MONGODB_CNN=mongodb://mongo:27017/test #cadena de conección
+    ports: #se indica el puerto por el cual se accedera a la api
+      - "4000:3000"
+    volumes: #se crea un sistemas de archivos grabable para que no se pierda informacion
+      - .:/app
+  mongo: #indicamos la imagen para nuestra base de datos
+    container_name: mongoDB
+    image: mongo
+    ports: #se indica los pertos de escucha de mongo
+    - "27017:27017"
