@@ -1,0 +1,29 @@
+version: '3'
+
+services: #especificamos los servicios
+  aplicacion: #creamos una imagen que sera la aplicacion de nuestro servicios
+    container_name: api
+    build: . #indicamos la ruta en donde se encuentra el dockerfile
+    depends_on:  #indicamos a que imagen se conectara nuestra api
+      - mongo
+    environment: #se indican las variables de entorno para la coneccion a la base de datos
+      - PORT=3000  #puerto
+      - MONGODB_CNN=mongodb://mongo:27017/test #cadena de conección
+    ports: #se indica el puerto por el cual se accedera a la api
+      - "2500:3000"
+    volumes: #se crea un sistemas de archivos grabable para que no se pierda informacion
+      - .:/app
+  mongo: #indicamos la imagen para nuestra base de datos
+    container_name: mongoDB
+    image: mongo
+    ports: #se indica los puertos de escucha de mongo
+    - "27017:27017"
+  nginx:
+    container_name: nginxServer
+    image: nginx:latest #imagen de ngix ha instalar la ultima version
+    ports:
+      - "80:80" #puertos de acceso a nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf #señalamos el archivo de configuracion de nginx para que se guarde
+    depends_on:
+      - aplicacion #servicios que controlara
