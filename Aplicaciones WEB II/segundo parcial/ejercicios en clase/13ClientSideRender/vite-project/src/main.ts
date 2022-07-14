@@ -89,7 +89,7 @@ consultar.addEventListener('click', async ()=>{
     })
 })
 
-grabar.addEventListener('click',()=>{
+grabar.addEventListener('click',async ()=>{
   const data:Producto = {
     nombre:nombre.value,
     costo: Number( costo.value),
@@ -98,7 +98,24 @@ grabar.addEventListener('click',()=>{
     stock: Number( stock.value),
 
   }
-  console.log(data);
+  if (id.value.trim().length>0 )
+  {
+
+    const resp: Producto = await (await httpAxios.put<Producto>(`productos/${id.value}`)).data
+    console.log(`El prducto ${resp.nombre} fue modificado con éxito`);
+    return;
+  }
+  try {
+    const resp: Producto =  await (await httpAxios.post<Producto>(`productos`, data)).data
+    console.log(`El producto ${resp.nombre} fue grabado con éxito`);
+  } catch (error) {
+    if ( axios.isAxiosError(error)  )
+    {
+      console.log(error );
+      
+    }
+    
+  }
   
 })
 
